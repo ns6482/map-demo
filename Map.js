@@ -1,7 +1,6 @@
-  var globalMap;
-  var markers = [];
-  var currAirport = {};
 
+var globalMap;
+var markers = {};
 
 function initMap() {
     // Callback function to create a map object and specify the DOM element for display.
@@ -13,9 +12,16 @@ function initMap() {
         scrollwheel: true,
         zoom: 6
     });
+
+    MapFcns.loadSiteList();
+    $('#airport-list').change(MapFcns.siteListChange);
+    $('#remove-airport').hide(); //hide remove button initially, until selection is made
+    $('#remove-airport').click(function(evt) {
+        evt.preventDefault(); //stop anchor from performing default behaviour
+        MapFcns.removeSite();
+    });
 }
 
-$(function() {
 
     var MapFcns = {
 
@@ -51,17 +57,13 @@ $(function() {
 
         siteListChange: function() {
             var ctl = $(this);
-            airportCode = ctl.val();
+            var currentCode = ctl.val();
 
-            if (airportCode) {
+            currAirport = _.findWhere(sites, {
+                Code: currentCode
+            });
 
-                //if airport same as current selection then exit
-                if (currAirport.Code === airportCode)
-                    return;
-
-                currAirport = _.findWhere(sites, {
-                    Code: airportCode
-                });
+            if (currAirport) {
 
                 $('#setting-code').text(currAirport.Code);
                 $('#setting-city').text(currAirport.City);
@@ -75,16 +77,17 @@ $(function() {
                     lng: currAirport.Longitude
                 };
 
-
-                var marker = new google.maps.Marker({
+                //real pain finding this, this is required for setMap(null) to work
+                //for a given marker, this is to avoid errors when going to marker second time
+                if(!markers[currAirport.Code]) {
+                  markers[currAirport.Code] = new google.maps.Marker({
                     id: currAirport.Code,
                     position: point,
                     map: globalMap,
                     title: currAirport.Code
-                });
+                  });
+              }
 
-                //markers[currAirport.Code] = marker;
-                markers.push(marker);
                 //move to the marker position
                 globalMap.panTo(point);
 
@@ -94,39 +97,15 @@ $(function() {
 
         removeSite: function() {
 
-            if (currAirport) {
-                //markers[currAirport.Code].setMap(null);
-                _.find(markers, 'id', currAirport.Code).setMap(null)
+            //if (currAirport) {
+              console.log(markers[currAirport.Code]);
 
-                //delete markers[currAirport.Code];
-                  markers = _.reject(markers, function(d){ return d.id === currAirport.Code} );
-                //this.clear();
-                console.log(markers);
-            }
-            return false;
+                markers[currAirport.Code].setMap(null);
+                markers[currAirport.Code] = null;
+
+                console.log(markers[currAirport.Code]);
+            //}
+            //return false;
         }
 
     }
-
-
-    MapFcns.loadSiteList();
-    $('#airport-list').change(MapFcns.siteListChange);
-    $('#remove-airport').hide(); //hide remove button initially, until selection is made
-    $('#remove-airport').click(function(evt) {
-        evt.preventDefault(); //stop anchor from performing default behaviour
-        MapFcns.removeSite();
-    });
-    $('#exercise-toggle').click(function() {
-        var toggleCtl = $(this),
-            toggleVal = toggleCtl.text();
-        if (toggleVal == '-') {
-            toggleCtl.text('+');
-            $('#exercise-instructions').hide();
-        } else {
-            toggleCtl.text('-');
-            $('#exercise-instructions').show();
-        }
-    });
-
-//window.onload = initMap;
-});
