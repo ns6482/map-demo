@@ -1,5 +1,5 @@
   var globalMap;
-  var markers = {};
+  var markers = [];
   var currAirport = {};
 
 
@@ -83,8 +83,8 @@ $(function() {
                     title: currAirport.Code
                 });
 
-                markers[currAirport.Code] = marker;
-
+                //markers[currAirport.Code] = marker;
+                markers.push(marker);
                 //move to the marker position
                 globalMap.panTo(point);
 
@@ -95,9 +95,12 @@ $(function() {
         removeSite: function() {
 
             if (currAirport) {
-                markers[currAirport.Code].setMap(null);
-                delete markers[currAirport.Code];
-                this.clear();
+                //markers[currAirport.Code].setMap(null);
+                _.find(markers, 'id', currAirport.Code).setMap(null)
+
+                //delete markers[currAirport.Code];
+                  markers = _.reject(markers, function(d){ return d.id === currAirport.Code} );
+                //this.clear();
                 console.log(markers);
             }
             return false;
