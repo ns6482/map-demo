@@ -5,13 +5,14 @@
     <title>Map Sample</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=PUT_API_KEY_HERE"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJYMp4kcYwocH5lBef5XiLgTvDQ31_KwU"></script>
     <script src="siteData.js"></script>
     <script src="Map.js"></script>
-    <link href="Map.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"></link>
+    <link href="Map.css" rel="stylesheet"></link>
 </head>
 
-<body>
+<body class="container">
     <h1>LLamasoft Map Exercise
         </h1>
 
@@ -43,49 +44,45 @@
                 Some more things to think about
                 <ul>
                     <li>We are constantly struggling with displaying as much data as simply and streamlined as possible. Is there something you can do with the layout to show the same information using less screen real estate?</li>
-
                     <li>Regarding markers, what happens with the existing code when you select an item multiple times?</li>
-
                     <li>If a user selects an airport that is not currently shown on the map, how do they find it? Can you make this easier?</li>
                 </ul>
             </p>
         </div>
     </div>
 
-    <div id="airport-data">
-        <div id="airport-controls">
-            Airports:
-            <select id="airport-list">
-            </select>
-        </div>
+    <div class="container">
+     <div id="airport-data" class="row">
+       Airports:
+       <select id="airport-list">
+       </select>
+     </div>
 
-        <div id="airport-settings">
-            <div id="setting-name">
-                <div>Code</div>
-                <div>City</div>
-                <div>State</div>
-                <div>Full Name</div>
-                <div>Latitude</div>
-                <div>Longitude</div>
-            </div>
-            <div id="setting-value">
-                <div id="setting-code"></div>
-                <div id="setting-city"></div>
-                <div id="setting-state"></div>
-                <div id="setting-name"></div>
-                <div id="setting-lat"></div>
-                <div id="setting-long"></div>
-            </div>
-            <div id="setting-toolbar">
-                <a id="remove-airport" href="#">Remove from map</a>
-            </div>
-        </div>
+     <div id = "panel">
+       <div id="airport-settings" class="row">
+         <div class="col-xs-1 col-sm-1 col-md-1"><strong>Code</strong></div>
+         <div class="col-xs-1 col-sm-1 col-md-1"><strong>City</strong></div>
+         <div class="col-xs-1 col-sm-1 col-md-1"><strong>State</strong></div>
+         <div class="col-xs-3 col-sm-3 col-md-3"><strong>Full Name</strong></div>
+         <div class="col-xs-1 col-sm-1 col-md-1"><strong>Latitude</strong></div>
+         <div class="col-xs-1 col-sm-1 col-md-1"><strong>Longitude</strong></div>
+       </div>
+       <div id="setting-value" class="row">
+         <div class="col-xs-1 col-sm-1 col-md-1" id="setting-code"></div>
+         <div class="col-xs-1 col-sm-1 col-md-1" id="setting-city"></div>
+         <div class="col-xs-1 col-sm-1 col-md-1" id="setting-state"></div>
+         <div class="col-xs-3 col-sm-3 col-md-3" id="setting-name"></div>
+         <div class="col-xs-1 col-sm-1 col-md-1" id="setting-lat"></div>
+         <div class="col-xs-1 col-sm-1 col-md-1" id="setting-long"></div>
+       </div>
+       <div id="setting-toolbar" class="row">
+         <a class="" id="remove-airport" href="#">Remove from map</a>
+       </div>
+     </div>
 
-    </div>
 
-    <div id="airport-map">
-    </div>
-
+   <div id="airport-map" class="row">
+   </div>
 
 </body>
 
